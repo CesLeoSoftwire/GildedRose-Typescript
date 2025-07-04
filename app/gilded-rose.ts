@@ -19,36 +19,18 @@ export class GildedRose {
 
     updateQuality() {
         for (let i = 0; i < this.items.length; i++) {
-            // sulfuras logic
-            if (this.items[i].name === 'Sulfuras, Hand of Ragnaros') {
-                continue;
-            }
-
-            if (this.items[i].name === 'Aged Brie') {
-                this.updateAgedBrie(i);
-
-                continue;
-            }
-
-            if (this.items[i].name === 'Backstage passes to a TAFKAL80ETC concert') {
-                this.updateBackstagePasses(i);
-                continue;
-            }
-
-
-            if (this.items[i].quality > 0) {
-                this.items[i].quality = this.items[i].quality - 1
-            }
-
-            this.items[i].sellIn = this.items[i].sellIn - 1;
-
-            if (this.items[i].sellIn < 0) {
-
-                if (this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-                    if (this.items[i].quality > 0) {
-                        this.items[i].quality = this.items[i].quality - 1
-                    }
-                }
+            switch (this.items[i].name) {
+                case 'Sulfuras, Hand of Ragnaros':
+                    break;
+                case 'Aged Brie':
+                    this.updateAgedBrie(i);
+                    break;
+                case 'Backstage passes to a TAFKAL80ETC concert':
+                    this.updateBackstagePasses(i);
+                    break;
+                default:
+                    this.updateBasicProduct(i);
+                    break;
             }
         }
         return this.items;
@@ -87,6 +69,19 @@ export class GildedRose {
         this.items[i].sellIn = this.items[i].sellIn - 1;
         if (this.items[i].sellIn < 0) {
             this.items[i].quality = this.items[i].quality - this.items[i].quality
+        }
+    }
+
+    updateBasicProduct(i: number) {
+        this.items[i].sellIn = this.items[i].sellIn - 1;
+
+        if (this.items[i].quality > 0) {
+            this.items[i].quality = this.items[i].quality - 1
+        }
+        if (this.items[i].sellIn < 0) {
+            if (this.items[i].quality > 0) {
+                this.items[i].quality = this.items[i].quality - 1
+            }
         }
     }
 
