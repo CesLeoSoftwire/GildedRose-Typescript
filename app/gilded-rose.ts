@@ -76,14 +76,16 @@ export class GildedRose {
     updateCake(i: number) {
         this.items[i].sellIn = this.items[i].sellIn - 1;
 
-        if (this.items[i].quality > 0) {
-            this.items[i].quality = this.items[i].quality - 2;
-        }
+
+        this.items[i].quality = this.items[i].quality - 2;
+
 
         if (this.items[i].sellIn < 0) {
-            if (this.items[i].quality > 0) {
-                this.items[i].quality = this.items[i].quality - 4;
-            }
+                this.items[i].quality = this.items[i].quality - 2;
+        }
+
+        if (this.items[i].quality < 0) {
+            this.items[i].quality = 0;
         }
         this.items[i].quality = Math.max(this.items[i].quality, 0);
     }
