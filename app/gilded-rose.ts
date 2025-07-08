@@ -46,9 +46,8 @@ export class GildedRose {
         if (this.items[i].sellIn <= 0) {
             this.items[i].quality++;
         }
-        if (this.items[i].quality > 50) {
-            this.items[i].quality = 50;
-        }
+
+        this.items[i].quality = Math.min(this.items[i].quality, 50);
 
         this.items[i].sellIn = this.items[i].sellIn - 1;
     }
@@ -62,16 +61,15 @@ export class GildedRose {
                     this.items[i].quality = this.items[i].quality + 1;
                 }
             }
-            if (this.items[i].sellIn < 6) {
-                if (this.items[i].quality < 50) {
-                    this.items[i].quality = this.items[i].quality + 1;
-                }
+            if (this.items[i].sellIn < 6 && this.items[i].quality < 50) {
+                this.items[i].quality = this.items[i].quality + 1;
             }
 
         }
+
         this.items[i].sellIn = this.items[i].sellIn - 1;
         if (this.items[i].sellIn < 0) {
-            this.items[i].quality = this.items[i].quality - this.items[i].quality;
+            this.items[i].quality = 0;
         }
     }
 
@@ -87,6 +85,7 @@ export class GildedRose {
                 this.items[i].quality = this.items[i].quality - 4;
             }
         }
+        this.items[i].quality = Math.max(this.items[i].quality, 0);
     }
 
     updateBasicProduct(i: number) {
